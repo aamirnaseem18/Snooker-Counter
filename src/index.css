@@ -1,0 +1,95 @@
+:root {
+  --table-green: #105c38;
+  --table-border: #4a3b2c;
+  --dark-bg: #121212;
+  --text-light: #f4f4f4;
+  --ball-red: #cc0000;
+  --ball-yellow: #ffcc00;
+  --ball-green: #009900;
+  --ball-brown: #663300;
+  --ball-blue: #0000cc;
+  --ball-pink: #ff99cc;
+  --ball-black: #111111;
+  --ball-white: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--dark-bg);
+  background-image: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+  color: var(--text-light);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.match-playing {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.match-finished {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  margin-top: 40px;
+  animation: scaleIn 0.5s ease-out;
+}
+
+.match-finished h2 {
+  font-size: 2.5rem;
+  margin-top: 0;
+  color: var(--table-green);
+}
+
+.winner {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.final-score {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 40px;
+}
+
+.reset-match-btn {
+  display: block;
+  margin: 40px auto 0;
+  padding: 10px 20px;
+  background: transparent;
+  color: #888;
+  border: 1px solid #444;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-match-btn:hover {
+  background: rgba(200, 0, 0, 0.1);
+  color: #ff4444;
+  border-color: #ff4444;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
