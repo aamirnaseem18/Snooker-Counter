@@ -1,6 +1,6 @@
 import express from 'express';
-import db from '../database.js';
 import jwt from 'jsonwebtoken';
+import Match from '../models/Match.js';
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key_change_this_in_production';
@@ -29,64 +29,48 @@ const verifyToken = (req, res, next) => {
 };
 
 // Save match
-router.post('/save', verifyToken, (req, res) => {
+router.post('/save', verifyToken, async (req, res) => {
   try {
     const { players, framesToWin, winner, matchData } = req.body;
     const userId = req.user.id;
 
-    db.run(
-      `INSERT INTO matches (userId, players, framesToWin, winner, matchData) VALUES (?, ?, ?, ?, ?)`,
-      [userId, JSON.stringify(players), framesToWin, winner, JSON.stringify(matchData)],
-      function(err) {
-        if (err) {
-          console.error('Error saving match:', err);
-          return res.status(500).json({
-            success: false,
-            message: 'Error saving match'
-          });
-        }
+    const match = await Match.create({
+      user: userId,
+      players,
+      framesToWin,
+      winner,
+      matchData
+    });
 
-        res.status(201).json({
-          success: true,
-          message: 'Match saved successfully',
-          matchId: this.lastID
-        });
-      }
-    );
+    res.status(201).json({
+      success: true,
+      message: 'Match saved successfully',
+      matchId: match._id
+    });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error saving match:', error);
     res.status(500).json({
       success: false,
-      message: 'Server error'
+      message: 'Error saving match'
     });
   }
 });
 
 // Get user matches
-router.get('/user-matches', verifyToken, (req, res) => {
+router.get('/user-matches', verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
 
-    db.all(
-      `SELECT * FROM matches WHERE userId = ? ORDER BY createdAt DESC LIMIT 50`,
-      [userId],
-      (err, matches) => {
-        if (err) {
-          console.error('Error fetching matches:', err);
-          return res.status(500).json({
-            success: false,
-            message: 'Error fetching matches'
-          });
-        }
+    const matches = await Match.find({ user: userId })
+                               .sort({ createdAt: -1 })
+                               .limit(50);
 
-        res.json({
-          success: true,
-          matches: matches || []
-        });
-      }
-    );
+    res.json({
+      success: true,
+      matches
+    });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error fetching matches:', error);
     res.status(500).json({
       success: false,
       message: 'Server error'

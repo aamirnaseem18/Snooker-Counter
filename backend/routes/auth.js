@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import db from '../database.js';
+import User from '../models/User.js';
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key_change_this_in_production';
@@ -26,46 +26,42 @@ router.post('/register', async (req, res) => {
       });
     }
 
+    // Check if user already exists
+    const existingUser = await User.findOne({ $or: [{ email }, { userId }] });
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: 'User ID or email already exists'
+      });
+    }
+
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert user into database
-    db.run(
-      `INSERT INTO users (userId, email, fullName, password) VALUES (?, ?, ?, ?)`,
-      [userId, email, fullName, hashedPassword],
-      function(err) {
-        if (err) {
-          if (err.message.includes('UNIQUE constraint failed')) {
-            return res.status(400).json({
-              success: false,
-              message: 'User ID or email already exists'
-            });
-          }
-          console.error('Database error:', err);
-          return res.status(500).json({
-            success: false,
-            message: 'Error creating user'
-          });
-        }
+    // Create user
+    const newUser = await User.create({
+      userId,
+      email,
+      fullName,
+      password: hashedPassword
+    });
 
-        // Create JWT token
-        const user = {
-          id: this.lastID,
-          userId,
-          email,
-          fullName
-        };
+    // Create JWT token
+    const userPayload = {
+      id: newUser._id,
+      userId: newUser.userId,
+      email: newUser.email,
+      fullName: newUser.fullName
+    };
 
-        const token = jwt.sign(user, JWT_SECRET, { expiresIn: '30d' });
+    const token = jwt.sign(userPayload, JWT_SECRET, { expiresIn: '30d' });
 
-        res.status(201).json({
-          success: true,
-          user,
-          token,
-          message: 'User registered successfully'
-        });
-      }
-    );
+    res.status(201).json({
+      success: true,
+      user: userPayload,
+      token,
+      message: 'User registered successfully'
+    });
   } catch (error) {
     console.error('Registration error:', error);
     res.status(500).json({
@@ -76,7 +72,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Login user
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const { userId, password } = req.body;
 
@@ -88,54 +84,42 @@ router.post('/login', (req, res) => {
       });
     }
 
-    // Find user in database
-    db.get(
-      `SELECT * FROM users WHERE userId = ?`,
-      [userId],
-      async (err, user) => {
-        if (err) {
-          console.error('Database error:', err);
-          return res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        }
+    // Find user
+    const user = await User.findOne({ userId });
 
-        if (!user) {
-          return res.status(401).json({
-            success: false,
-            message: 'Invalid user ID or password'
-          });
-        }
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid user ID or password'
+      });
+    }
 
-        // Check password
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+    // Check password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        if (!isPasswordValid) {
-          return res.status(401).json({
-            success: false,
-            message: 'Invalid user ID or password'
-          });
-        }
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid user ID or password'
+      });
+    }
 
-        // Create JWT token
-        const userData = {
-          id: user.id,
-          userId: user.userId,
-          email: user.email,
-          fullName: user.fullName
-        };
+    // Create JWT token
+    const userPayload = {
+      id: user._id,
+      userId: user.userId,
+      email: user.email,
+      fullName: user.fullName
+    };
 
-        const token = jwt.sign(userData, JWT_SECRET, { expiresIn: '30d' });
+    const token = jwt.sign(userPayload, JWT_SECRET, { expiresIn: '30d' });
 
-        res.json({
-          success: true,
-          user: userData,
-          token,
-          message: 'Login successful'
-        });
-      }
-    );
+    res.json({
+      success: true,
+      user: userPayload,
+      token,
+      message: 'Login successful'
+    });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({
