@@ -4,15 +4,17 @@ A comprehensive, professional-grade snooker scoring application built with moder
 
 ## 🌟 Features
 
+- **User Authentication**: Secure Login & Registration system using JWT and password hashing
+- **Data Persistence**: SQLite database for storing user accounts and (upcoming) match histories
 - **Multi-Player Support**: Play matches with 2 to 8 players (not just 1v1)
 - **Real-Time Scoring**: Track scores, breaks, and frames as they happen
-- **Professional UI**: Beautiful glassmorphism design with responsive layout
+- **Professional UI**: Beautiful glassmorphism design with a fully responsive mobile-first layout
 - **Turn Management**: Automatic turn rotation between players
 - **Foul Tracking**: Record fouls with customizable penalties (4-7 points)
 - **Frame Management**: Track frames won by each player
 - **Undo Functionality**: Revert last action with complete history tracking
 - **Match Statistics**: Display remaining reds, points remaining, and current break
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- **Cross-Device Compatibility**: Works seamlessly on desktop, tablet, and mobile devices
 
 ## 🎯 Snooker Game Rules Implemented
 
@@ -29,25 +31,30 @@ A comprehensive, professional-grade snooker scoring application built with moder
 - Node.js (v18 or higher)
 - npm or yarn
 
-### Installation
+### Installation & Setup
 
+1. **Clone the repository**
 ```bash
-# Clone the repository
 git clone https://github.com/aamirnaseem18/Snooker-Counter.git
 cd Snooker-Counter
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
 ```
+
+2. **Start the Backend Server**
+Open a terminal in the `backend` folder:
+```bash
+cd backend
+npm install
+npm start
+```
+*The backend API will run on http://localhost:5000*
+
+3. **Start the Frontend Application**
+Open a new terminal in the main project folder:
+```bash
+npm install
+npm run dev
+```
+*The React app will be available at http://localhost:5173*
 
 ## 📖 How to Use
 
@@ -80,31 +87,35 @@ npm run preview
 Snooker-Counter/
 ├── src/
 │   ├── components/
+│   │   ├── Login.tsx             # User authentication
+│   │   ├── Register.tsx          # Account creation
 │   │   ├── Controls.tsx          # Game action buttons
-│   │   ├── Controls.css          # Controls styling
 │   │   ├── Scoreboard.tsx        # Player scores display
-│   │   ├── Scoreboard.css        # Scoreboard styling
-│   │   ├── MatchSetup.tsx        # Match initialization
-│   │   └── MatchSetup.css        # Setup form styling
+│   │   └── MatchSetup.tsx        # Match initialization
+│   ├── services/
+│   │   └── authService.ts        # API integration for auth
 │   ├── utils/
 │   │   └── snookerLogic.ts       # Game state and rules engine
 │   ├── App.tsx                   # Main app component
-│   ├── main.tsx                  # React entry point
-│   ├── index.css                 # Global styles
-│   └── vite-env.d.ts             # Vite environment types
-├── index.html                    # HTML template
-├── package.json                  # Project dependencies
-├── tsconfig.json                 # TypeScript configuration
-├── vite.config.ts                # Vite build configuration
+│   └── index.css                 # Global responsive styles
+├── backend/
+│   ├── server.js                 # Express server
+│   ├── database.js               # SQLite setup & schema
+│   ├── routes/
+│   │   ├── auth.js               # Login/Register endpoints
+│   │   └── matches.js            # Match storage API
+├── QUICK_START.md                # Quick setup guide
 └── README.md                     # This file
 ```
 
 ## 💻 Technology Stack
 
-- **Frontend Framework**: React 18.2
-- **Language**: TypeScript 5.2
+- **Frontend Framework**: React 18.2 with TypeScript 5.2
+- **Backend API**: Node.js with Express
+- **Database**: SQLite
+- **Authentication**: JWT (JSON Web Tokens) & bcryptjs
 - **Build Tool**: Vite 5.2
-- **Styling**: CSS3 with glassmorphism effects
+- **Styling**: CSS3 with glassmorphism effects and responsive media queries
 - **Package Manager**: npm
 
 ## 🛠️ Development
