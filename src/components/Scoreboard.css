@@ -99,6 +99,138 @@
   margin-left: 8px;
 }
 
+/* Responsive Design */
+
+@media (max-width: 768px) {
+  .scoreboard {
+    padding: 16px;
+  }
+
+  .match-info {
+    font-size: 0.8rem;
+    margin-bottom: 16px;
+  }
+
+  .players-container {
+    gap: 12px;
+  }
+
+  .player-card {
+    padding: 16px;
+  }
+
+  .player-name {
+    font-size: 1.2rem;
+  }
+
+  .player-score {
+    font-size: 2.5rem;
+    margin: 12px 0;
+  }
+
+  .player-frames {
+    font-size: 0.9rem;
+  }
+
+  .table-info {
+    gap: 20px;
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+
+  .stat {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .scoreboard {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .match-info {
+    font-size: 0.7rem;
+    margin-bottom: 12px;
+  }
+
+  .players-container {
+    gap: 10px;
+  }
+
+  .player-card {
+    padding: 12px;
+  }
+
+  .player-card.active {
+    transform: scale(1.01);
+  }
+
+  .player-name {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .player-score {
+    font-size: 2rem;
+    margin: 8px 0;
+  }
+
+  .player-frames {
+    font-size: 0.8rem;
+  }
+
+  .current-break {
+    padding-top: 8px;
+    font-size: 0.95rem;
+  }
+
+  .table-info {
+    gap: 15px;
+    margin-top: 12px;
+    padding-top: 12px;
+    flex-direction: column;
+  }
+
+  .stat {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .scoreboard {
+    padding: 10px;
+  }
+
+  .match-info {
+    font-size: 0.65rem;
+  }
+
+  .players-container {
+    gap: 8px;
+  }
+
+  .player-card {
+    padding: 10px;
+  }
+
+  .player-name {
+    font-size: 0.9rem;
+  }
+
+  .player-score {
+    font-size: 1.5rem;
+  }
+
+  .player-frames {
+    font-size: 0.7rem;
+  }
+
+  .current-break {
+    font-size: 0.8rem;
+  }
+}
+
 @media (max-width: 600px) {
   .players-container {
     flex-direction: column;

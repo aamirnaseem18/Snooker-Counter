@@ -66,6 +66,7 @@
   align-items: center;
   gap: 16px;
   margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
 .action-row:last-child {
@@ -122,4 +123,116 @@
 .frame-btn {
   background: rgba(16, 92, 56, 0.4);
   color: #66ff99;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+  .controls {
+    margin-top: 24px;
+    padding: 16px;
+  }
+
+  .balls-grid {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .ball-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 1.3rem;
+  }
+
+  .action-row {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+
+  .action-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .foul-btn {
+    width: 40px;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .controls {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .balls-grid {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .ball-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.1rem;
+  }
+
+  .action-row {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .label {
+    font-size: 0.85rem;
+  }
+
+  .action-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .foul-btn {
+    width: 36px;
+    padding: 8px 0;
+  }
+}
+
+@media (max-width: 320px) {
+  .controls {
+    padding: 10px;
+  }
+
+  .balls-grid {
+    gap: 8px;
+  }
+
+  .ball-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 0.9rem;
+  }
+
+  .action-row {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .label {
+    font-size: 0.75rem;
+  }
+
+  .action-btn {
+    padding: 6px 10px;
+    font-size: 0.65rem;
+  }
+
+  .foul-btn {
+    width: 32px;
+    padding: 6px 0;
+  }
 }

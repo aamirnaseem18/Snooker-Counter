@@ -23,17 +23,95 @@ body {
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 20px;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+* {
   box-sizing: border-box;
 }
 
+#root {
+  width: 100%;
+}
+
+/* Header */
+.app-header {
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px 20px;
+  sticky: top;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #00aa44;
+  font-weight: 700;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.user-info {
+  font-size: 0.9rem;
+  color: #b0b0b0;
+}
+
+.logout-btn {
+  padding: 8px 16px;
+  background: rgba(255, 68, 68, 0.2);
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 68, 68, 0.3);
+  box-shadow: 0 2px 8px rgba(255, 68, 68, 0.2);
+}
+
+/* App Container */
 .app-container {
   width: 100%;
-  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
+  padding: 20px;
+  padding-top: 30px;
 }
 
 .match-playing {
+  display: grid;
+  gap: 20px;
   animation: fadeIn 0.5s ease-out;
 }
 
@@ -42,28 +120,45 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 40px;
+  padding: 40px 20px;
   text-align: center;
-  margin-top: 40px;
   animation: scaleIn 0.5s ease-out;
 }
 
 .match-finished h2 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-top: 0;
   color: var(--table-green);
 }
 
 .winner {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .final-score {
-  font-size: 4rem;
+  font-size: 2.5rem;
   font-weight: 800;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  word-break: break-word;
+}
+
+.start-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #00aa44 0%, #008833 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.start-btn:hover {
+  background: linear-gradient(135deg, #00cc55 0%, #00aa44 100%);
+  box-shadow: 0 4px 12px rgba(0, 170, 68, 0.3);
 }
 
 .reset-match-btn {
@@ -92,4 +187,161 @@ body {
 @keyframes scaleIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive Design */
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .header-content {
+    gap: 10px;
+  }
+
+  .app-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .app-content {
+    padding: 15px;
+    padding-top: 20px;
+  }
+
+  .match-playing {
+    gap: 15px;
+  }
+
+  .match-finished {
+    padding: 30px 15px;
+  }
+
+  .match-finished h2 {
+    font-size: 1.5rem;
+  }
+
+  .winner {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .final-score {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+    padding: 0;
+  }
+
+  .app-header {
+    padding: 12px 15px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .app-header h1 {
+    font-size: 1rem;
+  }
+
+  .header-right {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .user-info {
+    font-size: 0.8rem;
+  }
+
+  .logout-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+
+  .app-content {
+    padding: 12px;
+    padding-top: 15px;
+  }
+
+  .match-playing {
+    gap: 12px;
+  }
+
+  .match-finished {
+    padding: 20px 12px;
+    border-radius: 12px;
+  }
+
+  .match-finished h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .winner {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .final-score {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+  }
+
+  .start-btn,
+  .reset-match-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+/* Small devices (320px) */
+@media (max-width: 320px) {
+  body {
+    font-size: 12px;
+  }
+
+  .app-header {
+    padding: 10px 12px;
+  }
+
+  .app-header h1 {
+    font-size: 0.9rem;
+  }
+
+  .user-info {
+    font-size: 0.75rem;
+  }
+
+  .logout-btn {
+    padding: 6px 12px;
+    font-size: 0.7rem;
+  }
+
+  .app-content {
+    padding: 10px;
+  }
+
+  .match-finished h2 {
+    font-size: 1rem;
+  }
+
+  .winner {
+    font-size: 0.9rem;
+  }
+
+  .final-score {
+    font-size: 1.2rem;
+  }
 }
